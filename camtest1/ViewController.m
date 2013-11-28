@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "MWPhotoBrowser.h"
+#import "NSArray+Func.h"
 
 @interface ViewController ()
 {
@@ -142,17 +143,27 @@
 
 - (IBAction)viewSaved:(id)sender {
     // Create array of `MWPhoto` objects
-    self.photos = [NSMutableArray array];
-    [self.photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:@"http://farm4.static.flickr.com/3629/3339128908_7aecabc34b.jpg"]]];
-    [self.photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:@"http://farm4.static.flickr.com/3590/3329114220_5fbc5bc92b.jpg"]]];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSArray *imageURLS = [[NSFileManager defaultManager]
+                          contentsOfDirectoryAtURL:[NSURL fileURLWithPath:documentsDirectory]
+                          includingPropertiesForKeys:nil
+                          options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
+                          error:nil];
+    self.photos = (NSMutableArray*)
+    [imageURLS map:^id(id item) {
+        NSLog(@"%@ of class: %@", item, [item class]);
+        MWPhoto *photo = [MWPhoto photoWithURL:item];
+        photo.caption = [item description];
+        return photo;
+    }];
     
     // Create & present browser
     MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
     // Set options
     browser.displayActionButton = YES; // Show action button to allow sharing, copying, etc (defaults to YES)
-    browser.displayNavArrows = NO; // Whether to display left and right nav arrows on toolbar (defaults to NO)
+    browser.displayNavArrows = YES; // Whether to display left and right nav arrows on toolbar (defaults to NO)
     browser.zoomPhotosToFill = YES; // Images that almost fill the screen will be initially zoomed to fill (defaults to YES)
-    [browser setCurrentPhotoIndex:1]; // Example: allows second image to be presented first
     // Present
     [self.navigationController pushViewController:browser animated:YES];
     
