@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MWPhotoBrowser.h"
+
 
 @interface ViewController : UIViewController
+<UIImagePickerControllerDelegate,
+UINavigationControllerDelegate,
+MWPhotoBrowserDelegate>
+
+@property NSMutableArray *photos;
 
 @end
