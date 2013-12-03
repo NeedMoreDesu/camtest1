@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		73C51BB3B3C84EE6B0F43060 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72354856773647FC8394D15D /* libPods.a */; };
 		D77C16AC1844F70200F0E4AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77C16AB1844F70200F0E4AC /* Foundation.framework */; };
-		D77C16AE1844F70200F0E4AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77C16AD1844F70200F0E4AC /* CoreGraphics.framework */; };
 		D77C16B01844F70200F0E4AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77C16AF1844F70200F0E4AC /* UIKit.framework */; };
 		D77C16B61844F70200F0E4AC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D77C16B41844F70200F0E4AC /* InfoPlist.strings */; };
 		D77C16B81844F70200F0E4AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D77C16B71844F70200F0E4AC /* main.m */; };
@@ -24,6 +23,10 @@
 		D77C16D71844F70200F0E4AC /* camtest1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = D77C16D61844F70200F0E4AC /* camtest1Tests.m */; };
 		D77C16E11844FB6600F0E4AC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77C16E01844FB6600F0E4AC /* MobileCoreServices.framework */; };
 		D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */ = {isa = PBXBuildFile; fileRef = D7829F4D1847845800BE714B /* NSArray+Func.m */; };
+		D784EAD718488B6C00AB9A29 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */; };
+		D784EAD918488BAF00AB9A29 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD818488BAF00AB9A29 /* CoreData.framework */; };
+		D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = D784EADE184895AA00AB9A29 /* UIImageMeta.m */; };
+		D784EAE11848BDB300AB9A29 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAE01848BDB300AB9A29 /* ImageIO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,11 @@
 		D77C16E01844FB6600F0E4AC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D7829F4C1847845800BE714B /* NSArray+Func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Func.h"; sourceTree = "<group>"; };
 		D7829F4D1847845800BE714B /* NSArray+Func.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Func.m"; sourceTree = "<group>"; };
+		D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		D784EAD818488BAF00AB9A29 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D784EADD184895AA00AB9A29 /* UIImageMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageMeta.h; sourceTree = "<group>"; };
+		D784EADE184895AA00AB9A29 /* UIImageMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageMeta.m; sourceTree = "<group>"; };
+		D784EAE01848BDB300AB9A29 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		FE3CED5045824E2881E287D1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,8 +76,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D784EAE11848BDB300AB9A29 /* ImageIO.framework in Frameworks */,
+				D784EAD918488BAF00AB9A29 /* CoreData.framework in Frameworks */,
+				D784EAD718488B6C00AB9A29 /* AssetsLibrary.framework in Frameworks */,
 				D77C16E11844FB6600F0E4AC /* MobileCoreServices.framework in Frameworks */,
-				D77C16AE1844F70200F0E4AC /* CoreGraphics.framework in Frameworks */,
 				D77C16B01844F70200F0E4AC /* UIKit.framework in Frameworks */,
 				D77C16AC1844F70200F0E4AC /* Foundation.framework in Frameworks */,
 				73C51BB3B3C84EE6B0F43060 /* libPods.a in Frameworks */,
@@ -112,6 +122,9 @@
 		D77C16AA1844F70200F0E4AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D784EAE01848BDB300AB9A29 /* ImageIO.framework */,
+				D784EAD818488BAF00AB9A29 /* CoreData.framework */,
+				D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */,
 				D77C16E01844FB6600F0E4AC /* MobileCoreServices.framework */,
 				D77C16AB1844F70200F0E4AC /* Foundation.framework */,
 				D77C16AD1844F70200F0E4AC /* CoreGraphics.framework */,
@@ -126,13 +139,11 @@
 			isa = PBXGroup;
 			children = (
 				D7829F4B1847841D00BE714B /* Additional */,
-				D77C16BA1844F70200F0E4AC /* AppDelegate.h */,
-				D77C16BB1844F70200F0E4AC /* AppDelegate.m */,
-				D77C16BD1844F70200F0E4AC /* Main.storyboard */,
-				D77C16C01844F70200F0E4AC /* ViewController.h */,
-				D77C16C11844F70200F0E4AC /* ViewController.m */,
-				D77C16C31844F70200F0E4AC /* Images.xcassets */,
+				D784EADA184894B500AB9A29 /* Model */,
+				D784EADB184894EF00AB9A29 /* View */,
+				D784EADC184894F600AB9A29 /* Controller */,
 				D77C16B21844F70200F0E4AC /* Supporting Files */,
+				D77C16C31844F70200F0E4AC /* Images.xcassets */,
 			);
 			path = camtest1;
 			sourceTree = "<group>";
@@ -173,6 +184,34 @@
 				D7829F4D1847845800BE714B /* NSArray+Func.m */,
 			);
 			name = Additional;
+			sourceTree = "<group>";
+		};
+		D784EADA184894B500AB9A29 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D784EADD184895AA00AB9A29 /* UIImageMeta.h */,
+				D784EADE184895AA00AB9A29 /* UIImageMeta.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D784EADB184894EF00AB9A29 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D77C16BD1844F70200F0E4AC /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D784EADC184894F600AB9A29 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D77C16BA1844F70200F0E4AC /* AppDelegate.h */,
+				D77C16BB1844F70200F0E4AC /* AppDelegate.m */,
+				D77C16C01844F70200F0E4AC /* ViewController.h */,
+				D77C16C11844F70200F0E4AC /* ViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,6 +350,7 @@
 				D77C16C21844F70200F0E4AC /* ViewController.m in Sources */,
 				D77C16BC1844F70200F0E4AC /* AppDelegate.m in Sources */,
 				D77C16B81844F70200F0E4AC /* main.m in Sources */,
+				D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,6 +18,7 @@ PODS:
 DEPENDENCIES:
   - GPUImage
   - MWPhotoBrowser
+  - SDWebImage
 
 SPEC CHECKSUMS:
   DACircularProgress: 8c8f20c8dffdd647fbf570ddecbc2b1b59da5888

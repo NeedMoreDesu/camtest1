@@ -10,10 +10,16 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "MWPhotoBrowser.h"
 #import "NSArray+Func.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <CoreLocation/CoreLocation.h>
+#import <GPUImage/GPUImage.h>
+#import <SDWebImage/SDImageCache.h>
+#import "UIImageMeta.h"
 
 @interface ViewController ()
 {
     __weak IBOutlet UIImageView *_imageView;
+    UIImageMeta *_metaImage;
 }
 
 @end
@@ -53,6 +59,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _metaImage = [[UIImageMeta alloc] init];
+    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -65,23 +73,17 @@
 #pragma mark - Buttons
 
 - (IBAction)savePhoto:(UIButton *)sender {
-    UIImage *image = [_imageView image];
-    NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    [_metaImage saveImageWithName:@"test01" quality:0.9f];
     
-	// If you go to the folder below, you will find those pictures
-	NSLog(@"%@",docDir);
-    
-	NSLog(@"saving png");
-	NSString *pngFilePath = [NSString stringWithFormat:@"%@/test.png",docDir];
-	NSData *data1 = [NSData dataWithData:UIImagePNGRepresentation(image)];
-	[data1 writeToFile:pngFilePath atomically:YES];
-    
-	NSLog(@"saving jpeg");
-	NSString *jpegFilePath = [NSString stringWithFormat:@"%@/test.jpeg",docDir];
-	NSData *data2 = [NSData dataWithData:UIImageJPEGRepresentation(image, 1.0f)];//1.0f = 100% quality
-	[data2 writeToFile:jpegFilePath atomically:YES];
-    
-	NSLog(@"saving image done");
+//    NSURL *ubiq = [[NSFileManager defaultManager]
+//                   URLForUbiquityContainerIdentifier:nil];
+//    if (ubiq) {
+//        NSLog(@"iCloud access at %@", ubiq);
+//        // TODO: Load document...
+//    } else {
+//        NSLog(@"No iCloud access");
+//    }
+
 }
 
 - (IBAction)takePhoto:(UIButton *)sender {
@@ -89,7 +91,7 @@
         isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]
        == NO)
     {
-        [self simpleAlert:@"No camera" message:@"=("];
+        [self simpleAlert:@"No camera" message:nil];
         return;
     }
     
@@ -136,7 +138,29 @@
         image = originalImage;
     }
     
-    [_imageView setImage:image];
+    NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library assetForURL:assetURL
+             resultBlock:^(ALAsset *asset) {
+                 [_metaImage setMetadata: [[asset defaultRepresentation] metadata]];
+             }
+            failureBlock:^(NSError *error) {
+            }];
+
+    GPUImagePicture *gpuImage = [[GPUImagePicture alloc] initWithImage:image];
+    GPUImageFilter *filter2 = [[GPUImageSepiaFilter alloc] init];
+    GPUImageFilter *filter1 = [[GPUImageSketchFilter alloc] init];
+    [gpuImage addTarget:filter1];
+    [filter1 addTarget:filter2];
+    
+    [gpuImage processImage];
+
+    UIImage *filteredImage = [filter2 imageFromCurrentlyProcessedOutput];
+//    UIImage *filteredImage = [filter imageByFilteringImage:image];
+
+    [_metaImage setImage: filteredImage];
+    [_imageView setImage: [_metaImage image]];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -150,6 +174,10 @@
                           includingPropertiesForKeys:nil
                           options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
                           error:nil];
+    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+    [imageCache clearMemory];
+    [imageCache clearDisk];
+    [imageCache cleanDisk];
     self.photos = (NSMutableArray*)
     [imageURLS map:^id(id item) {
         NSLog(@"%@ of class: %@", item, [item class]);
@@ -164,12 +192,9 @@
     browser.displayActionButton = YES; // Show action button to allow sharing, copying, etc (defaults to YES)
     browser.displayNavArrows = YES; // Whether to display left and right nav arrows on toolbar (defaults to NO)
     browser.zoomPhotosToFill = YES; // Images that almost fill the screen will be initially zoomed to fill (defaults to YES)
+
     // Present
     [self.navigationController pushViewController:browser animated:YES];
-    
-    // Manipulate!
-    [browser showPreviousPhotoAnimated:YES];
-    [browser showNextPhotoAnimated:YES];
 }
 
 - (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
