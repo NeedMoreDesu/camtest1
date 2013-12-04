@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "MWPhotoBrowser.h"
+#import "UIImageMeta.h"
 
 
 @interface ViewController : UIViewController
 <UIImagePickerControllerDelegate,
-UINavigationControllerDelegate,
-MWPhotoBrowserDelegate>
+UINavigationControllerDelegate>
 
-@property NSMutableArray *photos;
+@property UIImageMeta *metaImage;
 
 @end
