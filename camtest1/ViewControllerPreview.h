@@ -11,7 +11,7 @@
 #import "UIImageMeta.h"
 
 
-@interface ViewController : UIViewController
+@interface ViewControllerPreview : UIViewController
 <UIImagePickerControllerDelegate,
 UINavigationControllerDelegate>
 

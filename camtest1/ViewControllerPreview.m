@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 dev. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "ViewControllerPreview.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "MWPhotoBrowser.h"
 #import "NSArray+Func.h"
@@ -16,14 +16,14 @@
 #import <SDWebImage/SDImageCache.h>
 #import "Filter.h"
 
-@interface ViewController ()
+@interface ViewControllerPreview ()
 {
     __weak IBOutlet UIImageView *_imageView;
 }
 
 @end
 
-@implementation ViewController
+@implementation ViewControllerPreview
 
 #pragma mark - Internals
 

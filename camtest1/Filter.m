@@ -152,22 +152,6 @@
                        description:@"This performs a comparison of intensity of the red channel of the 8 surrounding pixels and that of the central one, encoding the comparison results in a bit string that becomes this pixel intensity. The least-significant bit is the top-right comparison, going counterclockwise to end at the right comparison as the most significant bit."
                              class:[GPUImageLocalBinaryPatternFilter class]],
       
-      [[Filter alloc] initWithName:@"HighPassFilter"
-                       description:@"This applies a high pass filter to incoming video frames. This is the inverse of the low pass filter, showing the difference between the current frame and the weighted rolling average of previous ones. This is most useful for motion detection."
-                             class:[GPUImageHighPassFilter class]],
-      
-      [[Filter alloc] initWithName:@"MotionDetector"
-                       description:@"This is a motion detector based on a high-pass filter. You set the motionDetectionBlock and on every incoming frame it will give you the centroid of any detected movement in the scene (in normalized X,Y coordinates) as well as an intensity of motion for the scene."
-                             class:[GPUImageMotionDetector class]],
-      
-      [[Filter alloc] initWithName:@"HoughTransformLineDetector"
-                       description:@"Detects lines in the image using a Hough transform into parallel coordinate space. This approach is based entirely on the PC lines process developed by the Graph@FIT research group at the Brno University of Technology and described in their publications: M. Dubská, J. Havel, and A. Herout. Real-Time Detection of Lines using Parallel Coordinates and OpenGL. Proceedings of SCCG 2011, Bratislava, SK, p. 7 (http://medusa.fit.vutbr.cz/public/data/papers/2011-SCCG-Dubska-Real-Time-Line-Detection-Using-PC-and-OpenGL.pdf) and M. Dubská, J. Havel, and A. Herout. PClines — Line detection using parallel coordinates. 2011 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), p. 1489- 1494 (http://medusa.fit.vutbr.cz/public/data/papers/2011-CVPR-Dubska-PClines.pdf)."
-                             class:[GPUImageHoughTransformLineDetector class]],
-      
-      [[Filter alloc] initWithName:@"LineGenerator"
-                       description:@"A helper class that generates lines which can overlay the scene. The color of these lines can be adjusted using -setLineColorRed:green:blue:"
-                             class:[GPUImageLineGenerator class]],
-      
       [[Filter alloc] initWithName:@"MotionBlurFilter"
                        description:@"Applies a directional motion blur to an image"
                              class:[GPUImageMotionBlurFilter class]],

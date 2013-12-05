@@ -49,7 +49,6 @@
 {
     [super viewDidLoad];
     _metaImage = [[UIImageMeta alloc] init];
-    NSLog(@"%@", [[GPUImageSepiaFilter class] alloc]);
 
 	// Do any additional setup after loading the view.
 }

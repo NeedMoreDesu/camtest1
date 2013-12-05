@@ -94,7 +94,7 @@
             <objects>
                 <tabBarController definesPresentationContext="YES" id="kcy-lP-Ojp" customClass="TabBarController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Taking photo" id="C0Y-IG-Hc8"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="yvu-of-K7X">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -238,10 +238,10 @@
             </objects>
             <point key="canvasLocation" x="1068" y="-4"/>
         </scene>
-        <!--View Controller - View-->
+        <!--View Controller Preview - View-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController title="View" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController title="View" id="vXZ-lx-hvc" customClass="ViewControllerPreview" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zVF-9n-5Lf"/>
                         <viewControllerLayoutGuide type="bottom" id="Yjc-DP-OfW"/>
@@ -278,7 +278,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="View" id="oiW-Vs-cMr"/>
+                    <tabBarItem key="tabBarItem" title="Preview" id="oiW-Vs-cMr"/>
                     <connections>
                         <outlet property="_imageView" destination="rrF-Ph-Frs" id="4OV-uv-y9P"/>
                     </connections>
