@@ -10,6 +10,7 @@
 #import "UIImageMeta.h"
 #import "MWPhotoBrowser.h"
 #import "ViewControllerSettings.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface ViewControllerRoot : UITableViewController
 <MWPhotoBrowserDelegate,
@@ -19,5 +20,6 @@ SettingsDelegate>
 @property NSString *name;
 @property NSString *email;
 @property UIImageMeta *metaImage;
+@property CLLocationManager *locationManager;
 
 @end

@@ -12,6 +12,8 @@
 #import "NSArray+Func.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
+#import <CoreData/CoreData.h>
+#import <ImageIO/ImageIO.h>
 #import <GPUImage/GPUImage.h>
 #import <SDWebImage/SDImageCache.h>
 #import "Filter.h"
@@ -129,6 +131,8 @@
     [library assetForURL:assetURL
              resultBlock:^(ALAsset *asset) {
                  [_metaImage setMetadata: [[asset defaultRepresentation] metadata]];
+//                 CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
+//                 NSLog(@"%@", location);
              }
             failureBlock:^(NSError *error) {
             }];

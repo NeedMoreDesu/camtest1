@@ -28,7 +28,12 @@
 		D7819187184FC40100C94724 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819186184FC40100C94724 /* TabBarController.m */; };
 		D781918A184FD55800C94724 /* Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819189184FD55800C94724 /* Filter.m */; };
 		D781918D184FE78800C94724 /* ViewControllerFilterTable.m in Sources */ = {isa = PBXBuildFile; fileRef = D781918C184FE78800C94724 /* ViewControllerFilterTable.m */; };
-		D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */ = {isa = PBXBuildFile; fileRef = D7829F4D1847845800BE714B /* NSArray+Func.m */; };
+		D7819199185202C700C94724 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D781918F185202C700C94724 /* LICENSE */; };
+		D781919A185202C700C94724 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819191185202C700C94724 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D781919B185202C700C94724 /* NSData+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819193185202C700C94724 /* NSData+URLEncode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D781919C185202C700C94724 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819195185202C700C94724 /* NSString+URLEncode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D781919E185202C700C94724 /* TumblrUploadr.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819198185202C700C94724 /* TumblrUploadr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */ = {isa = PBXBuildFile; fileRef = D7829F4D1847845800BE714B /* NSArray+Func.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D784EAD718488B6C00AB9A29 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */; };
 		D784EAD918488BAF00AB9A29 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD818488BAF00AB9A29 /* CoreData.framework */; };
 		D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = D784EADE184895AA00AB9A29 /* UIImageMeta.m */; };
@@ -79,6 +84,15 @@
 		D7819189184FD55800C94724 /* Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Filter.m; sourceTree = "<group>"; };
 		D781918B184FE78800C94724 /* ViewControllerFilterTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewControllerFilterTable.h; sourceTree = "<group>"; };
 		D781918C184FE78800C94724 /* ViewControllerFilterTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewControllerFilterTable.m; sourceTree = "<group>"; };
+		D781918F185202C700C94724 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D7819190185202C700C94724 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		D7819191185202C700C94724 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		D7819192185202C700C94724 /* NSData+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+URLEncode.h"; sourceTree = "<group>"; };
+		D7819193185202C700C94724 /* NSData+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+URLEncode.m"; sourceTree = "<group>"; };
+		D7819194185202C700C94724 /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
+		D7819195185202C700C94724 /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
+		D7819197185202C700C94724 /* TumblrUploadr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TumblrUploadr.h; sourceTree = "<group>"; };
+		D7819198185202C700C94724 /* TumblrUploadr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TumblrUploadr.m; sourceTree = "<group>"; };
 		D7829F4C1847845800BE714B /* NSArray+Func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Func.h"; sourceTree = "<group>"; };
 		D7829F4D1847845800BE714B /* NSArray+Func.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Func.m"; sourceTree = "<group>"; };
 		D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -156,6 +170,7 @@
 		D77C16B11844F70200F0E4AC /* camtest1 */ = {
 			isa = PBXGroup;
 			children = (
+				D781918E185202B700C94724 /* Foreign */,
 				D7829F4B1847841D00BE714B /* Additional */,
 				D784EADA184894B500AB9A29 /* Model */,
 				D784EADB184894EF00AB9A29 /* View */,
@@ -193,6 +208,22 @@
 				D77C16D31844F70200F0E4AC /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D781918E185202B700C94724 /* Foreign */ = {
+			isa = PBXGroup;
+			children = (
+				D781918F185202C700C94724 /* LICENSE */,
+				D7819190185202C700C94724 /* NSData+Base64.h */,
+				D7819191185202C700C94724 /* NSData+Base64.m */,
+				D7819192185202C700C94724 /* NSData+URLEncode.h */,
+				D7819193185202C700C94724 /* NSData+URLEncode.m */,
+				D7819194185202C700C94724 /* NSString+URLEncode.h */,
+				D7819195185202C700C94724 /* NSString+URLEncode.m */,
+				D7819197185202C700C94724 /* TumblrUploadr.h */,
+				D7819198185202C700C94724 /* TumblrUploadr.m */,
+			);
+			name = Foreign;
 			sourceTree = "<group>";
 		};
 		D7829F4B1847841D00BE714B /* Additional */ = {
@@ -324,6 +355,7 @@
 			files = (
 				D77C16C41844F70200F0E4AC /* Images.xcassets in Resources */,
 				D77C16B61844F70200F0E4AC /* InfoPlist.strings in Resources */,
+				D7819199185202C700C94724 /* LICENSE in Resources */,
 				D77C16BF1844F70200F0E4AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,13 +411,17 @@
 				D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */,
 				D7819181184FB21400C94724 /* ViewControllerSettings.m in Sources */,
 				D77C16C21844F70200F0E4AC /* ViewControllerPreview.m in Sources */,
+				D781919C185202C700C94724 /* NSString+URLEncode.m in Sources */,
 				D7819187184FC40100C94724 /* TabBarController.m in Sources */,
 				D77C16BC1844F70200F0E4AC /* AppDelegate.m in Sources */,
+				D781919A185202C700C94724 /* NSData+Base64.m in Sources */,
 				D77C16B81844F70200F0E4AC /* main.m in Sources */,
+				D781919E185202C700C94724 /* TumblrUploadr.m in Sources */,
 				D7819184184FC18A00C94724 /* ViewControllerSave.m in Sources */,
 				D781918D184FE78800C94724 /* ViewControllerFilterTable.m in Sources */,
 				D781917B184FA61D00C94724 /* ViewControllerRoot.m in Sources */,
 				D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */,
+				D781919B185202C700C94724 /* NSData+URLEncode.m in Sources */,
 				D781918A184FD55800C94724 /* Filter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

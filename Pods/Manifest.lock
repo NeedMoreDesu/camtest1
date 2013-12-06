@@ -1,6 +1,7 @@
 PODS:
   - DACircularProgress (2.1.0)
   - GPUImage (0.1.1)
+  - JXHTTP (1.0.0)
   - MBProgressHUD (0.8)
   - MWPhotoBrowser (1.1.4):
     - DACircularProgress
@@ -14,17 +15,35 @@ PODS:
   - SDWebImage (3.5):
     - SDWebImage/Core
   - SDWebImage/Core (3.5)
+  - TMTumblrSDK (1.0.5):
+    - TMTumblrSDK/Activity
+    - TMTumblrSDK/APIClient
+    - TMTumblrSDK/AppClient
+    - TMTumblrSDK/Core
+  - TMTumblrSDK/Activity (1.0.5)
+  - TMTumblrSDK/APIClient (1.0.5):
+    - JXHTTP (= 1.0.0)
+    - TMTumblrSDK/APIClient/Authentication
+  - TMTumblrSDK/APIClient/Authentication (1.0.5):
+    - JXHTTP (= 1.0.0)
+    - TMTumblrSDK/Core
+  - TMTumblrSDK/AppClient (1.0.5):
+    - TMTumblrSDK/Core
+  - TMTumblrSDK/Core (1.0.5)
 
 DEPENDENCIES:
   - GPUImage
   - MWPhotoBrowser
   - SDWebImage
+  - TMTumblrSDK
 
 SPEC CHECKSUMS:
   DACircularProgress: 8c8f20c8dffdd647fbf570ddecbc2b1b59da5888
   GPUImage: b9840114a0ad0323801c2e0aa2752679057f808d
+  JXHTTP: 04f027e55c252d206cf3fcc2a2bde3914a35d842
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
   MWPhotoBrowser: bcc8bffb52c7ae6e8550d98336c65b8de969aeb3
   SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
+  TMTumblrSDK: 39f6c903290620947bc780c8e2971b007c60fcdd
 
 COCOAPODS: 0.28.0

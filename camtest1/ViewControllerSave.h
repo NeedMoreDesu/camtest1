@@ -10,6 +10,7 @@
 #import "UIImageMeta.h"
 
 @interface ViewControllerSave : UIViewController
+<UITextViewDelegate>
 
 @property UIImageMeta *metaImage;
 

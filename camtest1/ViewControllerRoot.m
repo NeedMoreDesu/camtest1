@@ -49,8 +49,18 @@
 {
     [super viewDidLoad];
     _metaImage = [[UIImageMeta alloc] init];
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    [self.locationManager startUpdatingLocation];
 
 	// Do any additional setup after loading the view.
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation
+{
+    _metaImage.location = newLocation;
 }
 
 - (void)didReceiveMemoryWarning
