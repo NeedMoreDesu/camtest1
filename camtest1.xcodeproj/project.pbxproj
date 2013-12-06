@@ -33,6 +33,7 @@
 		D781919B185202C700C94724 /* NSData+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819193185202C700C94724 /* NSData+URLEncode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D781919C185202C700C94724 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819195185202C700C94724 /* NSString+URLEncode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D781919E185202C700C94724 /* TumblrUploadr.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819198185202C700C94724 /* TumblrUploadr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D78191A31852683700C94724 /* Sync.m in Sources */ = {isa = PBXBuildFile; fileRef = D78191A21852683700C94724 /* Sync.m */; };
 		D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */ = {isa = PBXBuildFile; fileRef = D7829F4D1847845800BE714B /* NSArray+Func.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D784EAD718488B6C00AB9A29 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */; };
 		D784EAD918488BAF00AB9A29 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD818488BAF00AB9A29 /* CoreData.framework */; };
@@ -93,6 +94,8 @@
 		D7819195185202C700C94724 /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
 		D7819197185202C700C94724 /* TumblrUploadr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TumblrUploadr.h; sourceTree = "<group>"; };
 		D7819198185202C700C94724 /* TumblrUploadr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TumblrUploadr.m; sourceTree = "<group>"; };
+		D78191A11852683700C94724 /* Sync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sync.h; sourceTree = "<group>"; };
+		D78191A21852683700C94724 /* Sync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sync.m; sourceTree = "<group>"; };
 		D7829F4C1847845800BE714B /* NSArray+Func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Func.h"; sourceTree = "<group>"; };
 		D7829F4D1847845800BE714B /* NSArray+Func.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Func.m"; sourceTree = "<group>"; };
 		D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -242,6 +245,8 @@
 				D784EADE184895AA00AB9A29 /* UIImageMeta.m */,
 				D7819188184FD55800C94724 /* Filter.h */,
 				D7819189184FD55800C94724 /* Filter.m */,
+				D78191A11852683700C94724 /* Sync.h */,
+				D78191A21852683700C94724 /* Sync.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 				D781917B184FA61D00C94724 /* ViewControllerRoot.m in Sources */,
 				D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */,
 				D781919B185202C700C94724 /* NSData+URLEncode.m in Sources */,
+				D78191A31852683700C94724 /* Sync.m in Sources */,
 				D781918A184FD55800C94724 /* Filter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,6 +11,7 @@
 #import <SDWebImage/SDImageCache.h>
 #import "NSArray+Func.h"
 #import <GPUImage/GPUImage.h>
+#import "Sync.h"
 
 @interface ViewControllerRoot ()
 {
@@ -52,6 +53,19 @@
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
     [self.locationManager startUpdatingLocation];
+    
+    NSURL *ubiq = [[NSFileManager defaultManager]
+                   URLForUbiquityContainerIdentifier:nil];
+    Sync *sync = [[Sync alloc] init];
+    _metaImage.sync = sync;
+    sync.directory1 = [ubiq URLByAppendingPathComponent:@"Documents"];
+    sync.directory2 = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:sync
+     selector:@selector(simpleSync)
+     name: UIApplicationDidBecomeActiveNotification
+     object:nil];
 
 	// Do any additional setup after loading the view.
 }
@@ -94,9 +108,11 @@
     [imageCache clearDisk];
     [imageCache cleanDisk];
     self.photos = (NSMutableArray*)
-    [imageURLS map:^id(id item) {
-        MWPhoto *photo = [MWPhoto photoWithURL:item];
-        photo.caption = [item description];
+    [[imageURLS filter:^BOOL(NSUInteger idx, NSURL *item) {
+        return [[item pathExtension] isEqual: @"jpeg"];
+    }] map:^id(id item) {
+                MWPhoto *photo = [MWPhoto photoWithURL:item];
+        photo.caption = [[item lastPathComponent] description];
         return photo;
     }];
     

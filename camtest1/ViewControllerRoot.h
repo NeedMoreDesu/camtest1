@@ -15,7 +15,8 @@
 @interface ViewControllerRoot : UITableViewController
 <MWPhotoBrowserDelegate,
 UITableViewDelegate,
-SettingsDelegate>
+SettingsDelegate,
+CLLocationManagerDelegate>
 
 @property NSString *name;
 @property NSString *email;

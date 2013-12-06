@@ -14,6 +14,7 @@
 
 @interface ViewControllerSave ()
 {
+    __weak IBOutlet UILabel *_topLabel;
     __weak IBOutlet UITextField *_text;
     __weak IBOutlet UISlider *_scroll;
     __weak IBOutlet UITextView *_textView;
@@ -161,23 +162,27 @@
 
 - (IBAction)tumblrPhoto:(id)sender {
     NSData *picData = [NSData dataWithData:UIImagePNGRepresentation([_metaImage image])];
-    [[TMAPIClient sharedInstance] authenticate:@"camtest1" callback:^(NSError *error) {
-        if (error)
-            NSLog(@"Authentication failed: %@ %@", error, [error description]);
-        else
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                TumblrUploadr *tu = [[TumblrUploadr alloc]
-                                     initWithNSDataForPhotos:@[picData]
-                                     andBlogName:@"testtesttestwww.tumblr.com"
-                                     andDelegate:nil
-                                     andCaption:[_textView text]];
-                dispatch_async( dispatch_get_main_queue(), ^{
-                    [tu
-                     signAndSendWithTokenKey:[[TMAPIClient sharedInstance] OAuthToken]
-                     andSecret:[[TMAPIClient sharedInstance] OAuthTokenSecret]];
-                });
-            });
-    }];
+    void (^block) (void) = ^{
+        TumblrUploadr *tu = [[TumblrUploadr alloc]
+                             initWithNSDataForPhotos:@[picData]
+                             andBlogName:@"testtesttestwww.tumblr.com"
+                             andDelegate:nil
+                             andCaption:[_textView text]];
+        dispatch_async( dispatch_get_main_queue(), ^{
+            [tu
+             signAndSendWithTokenKey:[[TMAPIClient sharedInstance] OAuthToken]
+             andSecret:[[TMAPIClient sharedInstance] OAuthTokenSecret]];
+        });
+    };
+    if ([[TMAPIClient sharedInstance] OAuthToken])
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
+    else
+        [[TMAPIClient sharedInstance] authenticate:@"camtest1" callback:^(NSError *error) {
+            if (error)
+                NSLog(@"Authentication failed: %@ %@", error, [error description]);
+            else
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
+        }];
 }
 
 - (void) tumblrUploadr:(TumblrUploadr *)tu didFailWithError:(NSError *)error {

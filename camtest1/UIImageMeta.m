@@ -15,9 +15,15 @@
 
 - (void)saveImageWithName:(NSString*)name quality:(float)quality
 {
-    if([self image])
+    [self saveImageWithName:name quality:quality atDirectory:self.sync.directory1];
+    [self saveImageWithName:name quality:quality atDirectory:self.sync.directory2];
+}
+
+- (void)saveImageWithName:(NSString*)name quality:(float)quality atDirectory:(NSURL*)directory
+{
+    if([self image] && directory)
     {
-        NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *docDir = [directory path];
         
         // If you go to the folder below, you will find those pictures
         NSLog(@"%@",docDir);

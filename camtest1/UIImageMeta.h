@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Sync.h"
 
 @interface UIImageMeta : NSObject
 
 @property UIImage *image;
 @property NSDictionary *metadata;
 @property CLLocation *location;
+@property Sync *sync;
 
 - (void) saveImageWithName:(NSString*)name quality:(float)quality;
 
