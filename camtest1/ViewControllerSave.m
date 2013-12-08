@@ -91,7 +91,7 @@
     [_metaImage
      saveImageWithName:[_text text]
      quality:[_scroll value]];
-    _text.text = [self generateFilename];
+    [_text setText: [self generateFilename]];
 }
 
 #pragma mark - twitter

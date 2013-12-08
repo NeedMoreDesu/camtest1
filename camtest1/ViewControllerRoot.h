@@ -21,6 +21,7 @@ CLLocationManagerDelegate>
 @property NSString *name;
 @property NSString *email;
 @property UIImageMeta *metaImage;
+@property State *state;
 @property CLLocationManager *locationManager;
 
 @end

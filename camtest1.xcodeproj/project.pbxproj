@@ -35,6 +35,7 @@
 		D781919E185202C700C94724 /* TumblrUploadr.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819198185202C700C94724 /* TumblrUploadr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D78191A31852683700C94724 /* Sync.m in Sources */ = {isa = PBXBuildFile; fileRef = D78191A21852683700C94724 /* Sync.m */; };
 		D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */ = {isa = PBXBuildFile; fileRef = D7829F4D1847845800BE714B /* NSArray+Func.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D78491C21854B4A900F8DD01 /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = D78491C11854B4A900F8DD01 /* State.m */; };
 		D784EAD718488B6C00AB9A29 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */; };
 		D784EAD918488BAF00AB9A29 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD818488BAF00AB9A29 /* CoreData.framework */; };
 		D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = D784EADE184895AA00AB9A29 /* UIImageMeta.m */; };
@@ -98,6 +99,8 @@
 		D78191A21852683700C94724 /* Sync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sync.m; sourceTree = "<group>"; };
 		D7829F4C1847845800BE714B /* NSArray+Func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Func.h"; sourceTree = "<group>"; };
 		D7829F4D1847845800BE714B /* NSArray+Func.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Func.m"; sourceTree = "<group>"; };
+		D78491C01854B4A900F8DD01 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
+		D78491C11854B4A900F8DD01 /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
 		D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		D784EAD818488BAF00AB9A29 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D784EADD184895AA00AB9A29 /* UIImageMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageMeta.h; sourceTree = "<group>"; };
@@ -247,6 +250,8 @@
 				D7819189184FD55800C94724 /* Filter.m */,
 				D78191A11852683700C94724 /* Sync.h */,
 				D78191A21852683700C94724 /* Sync.m */,
+				D78491C01854B4A900F8DD01 /* State.h */,
+				D78491C11854B4A900F8DD01 /* State.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -414,6 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */,
+				D78491C21854B4A900F8DD01 /* State.m in Sources */,
 				D7819181184FB21400C94724 /* ViewControllerSettings.m in Sources */,
 				D77C16C21844F70200F0E4AC /* ViewControllerPreview.m in Sources */,
 				D781919C185202C700C94724 /* NSString+URLEncode.m in Sources */,

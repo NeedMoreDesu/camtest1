@@ -131,6 +131,7 @@
     [library assetForURL:assetURL
              resultBlock:^(ALAsset *asset) {
                  [_metaImage setMetadata: [[asset defaultRepresentation] metadata]];
+                 [[_metaImage state] updateLocation];
 //                 CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
 //                 NSLog(@"%@", location);
              }

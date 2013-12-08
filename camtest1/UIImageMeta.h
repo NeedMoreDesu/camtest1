@@ -8,16 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-#import <CoreLocation/CoreLocation.h>
-#import "Sync.h"
+#import <MWPhotoBrowser/MWPhoto.h>
+#import "State.h"
 
 @interface UIImageMeta : NSObject
 
 @property UIImage *image;
-@property NSDictionary *metadata;
-@property CLLocation *location;
-@property Sync *sync;
+@property float quality;
+@property NSMutableDictionary *metadata;
+@property MWPhoto *mwPhoto;
+@property State *state;
 
 - (void) saveImageWithName:(NSString*)name quality:(float)quality;
+- (UIImageMeta*) initWithURL:(NSURL*)url;
 
 @end

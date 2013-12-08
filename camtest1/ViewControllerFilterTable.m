@@ -80,6 +80,7 @@
     UIImage *newImage = [[filters objectAtIndex:[indexPath row]]
                          applyFilterToImage:[_metaImage image]];
     [_metaImage setImage:newImage];
+
     [[self tabBarController] setSelectedIndex:0];
 }
 

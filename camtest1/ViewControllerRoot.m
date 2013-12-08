@@ -56,8 +56,11 @@
     
     NSURL *ubiq = [[NSFileManager defaultManager]
                    URLForUbiquityContainerIdentifier:nil];
+    State *state = [[State alloc] init];
+    _state = state;
     Sync *sync = [[Sync alloc] init];
-    _metaImage.sync = sync;
+    _state.sync = sync;
+    _metaImage.state = self.state;
     sync.directory1 = [ubiq URLByAppendingPathComponent:@"Documents"];
     sync.directory2 = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
 
@@ -66,7 +69,7 @@
      selector:@selector(simpleSync)
      name: UIApplicationDidBecomeActiveNotification
      object:nil];
-
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -74,7 +77,7 @@
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation
 {
-    _metaImage.location = newLocation;
+    [self.state setCurrentLocation: newLocation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,10 +113,24 @@
     self.photos = (NSMutableArray*)
     [[imageURLS filter:^BOOL(NSUInteger idx, NSURL *item) {
         return [[item pathExtension] isEqual: @"jpeg"];
-    }] map:^id(id item) {
-                MWPhoto *photo = [MWPhoto photoWithURL:item];
-        photo.caption = [[item lastPathComponent] description];
-        return photo;
+    }] map:^id(NSURL *item) {
+        UIImageMeta *metaImage = [[UIImageMeta alloc] initWithURL: item];
+        metaImage.state = self.state;
+        NSDictionary *gps = [[metaImage metadata]
+                             objectForKey:@"{GPS}"];
+        NSString *filename = [[item lastPathComponent] description];
+        NSString *date=@"", *location=@"";
+        if(gps)
+        {
+            date= [NSString stringWithFormat:@"%@ %@",
+                   gps[@"DateStamp"], gps[@"TimeStamp"]];
+            location = [NSString stringWithFormat:@"Lat: %@%@ Lon: %@%@ Alt:%@",
+                        gps[@"LatitudeRef"],gps[@"Latitude"],
+                        gps[@"LongitudeRef"],gps[@"Longitude"],
+                        gps[@"Altitude"]];
+        }
+        metaImage.mwPhoto.caption = [NSString stringWithFormat:@"%@ %@ %@", filename, location, date];
+        return metaImage;
     }];
     
     // Create & present browser
@@ -135,10 +152,19 @@
 
 - (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
     if (index < self.photos.count)
-        return [self.photos objectAtIndex:index];
+    {
+        UIImageMeta *metaImage = [self.photos objectAtIndex:index];
+        return [metaImage mwPhoto];
+    }
     return nil;
 }
 
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser didDisplayPhotoAtIndex:(NSUInteger)index
+{
+    UIImageMeta *metaImage = [self.photos objectAtIndex:index];
+    _metaImage = metaImage;
+    [[metaImage state] setLocation:nil];
+}
 
 
 @end

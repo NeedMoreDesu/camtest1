@@ -13,10 +13,19 @@
 
 @implementation UIImageMeta
 
+- (UIImageMeta*)init
+{
+    if([super init])
+    {
+        [self setQuality:90];
+    }
+    return self;
+}
+
 - (void)saveImageWithName:(NSString*)name quality:(float)quality
 {
-    [self saveImageWithName:name quality:quality atDirectory:self.sync.directory1];
-    [self saveImageWithName:name quality:quality atDirectory:self.sync.directory2];
+    [self saveImageWithName:name quality:quality atDirectory:self.state.sync.directory1];
+    [self saveImageWithName:name quality:quality atDirectory:self.state.sync.directory2];
 }
 
 - (void)saveImageWithName:(NSString*)name quality:(float)quality atDirectory:(NSURL*)directory
@@ -30,10 +39,10 @@
         
         NSLog(@"saving jpeg");
         NSString *jpegFilePath = [NSString stringWithFormat:@"%@/%@.jpeg",docDir,name];
-        NSData *data2 = [NSData dataWithData:UIImageJPEGRepresentation([self image], quality)];
+        NSData *data = [NSData dataWithData:UIImageJPEGRepresentation([self image], quality)];
         
         NSMutableData *dest_data = [NSMutableData data];
-        CGImageSourceRef  source = CGImageSourceCreateWithData((__bridge CFDataRef)data2, NULL);
+        CGImageSourceRef  source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
         if (!source)
         {
             NSLog(@"***Could not create image source ***");
@@ -43,13 +52,20 @@
         if(!destination) {
             NSLog(@"***Could not create image destination ***");
         }
-        NSDictionary *metadata = [self metadata];
-        if (!metadata)
-            metadata = (__bridge NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,0,NULL);
-        [metadata
-         setValue:[self getGPSDictionaryForLocation:[self location]]
-         forKey:(NSString*)kCGImagePropertyGPSDictionary];
-        NSLog(@"%@", metadata);
+        if(![self metadata])
+            [self setMetadata:
+             [NSMutableDictionary dictionaryWithDictionary:
+              (__bridge NSDictionary *)
+              CGImageSourceCopyPropertiesAtIndex(source,0,NULL)]];
+        if(self.state.location)
+        {
+            NSDictionary *gps = [self getGPSDictionaryForLocation:self.state.location];
+            NSString *key = (NSString*)kCGImagePropertyGPSDictionary;
+            [[self metadata]
+             setValue: gps
+             forKey: key];
+        }
+        NSLog(@"%@", self.metadata);
         CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) [self metadata]);
         BOOL success = NO;
         success = CGImageDestinationFinalize(destination);
@@ -64,6 +80,47 @@
         
         NSLog(@"saving image done");
     }
+}
+
+- (UIImageMeta*) initWithURL:(NSURL*)url
+{
+    if ([super init] && url)
+    {
+        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        NSDictionary *dic = nil;
+        CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)(data), NULL);
+        
+        if ( NULL == source )
+        {
+#ifdef _DEBUG
+            CGImageSourceStatus status = CGImageSourceGetStatus ( source );
+            NSLog ( @"Error: file name : %@ - Status: %d", file, status );
+#endif
+        }
+        else
+        {
+            CFDictionaryRef metadataRef =
+            CGImageSourceCopyPropertiesAtIndex ( source, 0, NULL );
+            if ( metadataRef )
+            {
+                NSDictionary* immutableMetadata = (__bridge NSDictionary *)metadataRef;
+                if ( immutableMetadata )
+                {
+                    dic =
+                    [ NSDictionary dictionaryWithDictionary : (__bridge NSDictionary *)metadataRef ];
+                }
+                
+                CFRelease ( metadataRef );
+            }
+            
+            CFRelease(source);
+            source = nil;
+        }
+        self.image = [[UIImage alloc] initWithData:data];
+        self.metadata = [NSMutableDictionary dictionaryWithDictionary:dic];
+        self.mwPhoto = [[MWPhoto alloc] initWithURL:url];
+    }
+    return self;
 }
 
 - (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {
