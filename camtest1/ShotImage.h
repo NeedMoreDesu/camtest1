@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MWPhotoBrowser/MWPhoto.h>
-#import "State.h"
+#import <CoreLocation/CoreLocation.h>
+#import "ShotMetadata.h"
 
-@interface UIImageMeta : NSObject
+@interface ShotImage : NSObject
 
 @property UIImage *image;
-@property float quality;
-@property NSMutableDictionary *metadata;
 @property MWPhoto *mwPhoto;
-@property State *state;
+@property ShotMetadata *metadata;
 
-- (void) saveImageWithName:(NSString*)name quality:(float)quality;
-- (UIImageMeta*) initWithURL:(NSURL*)url;
+- (void)saveImageWithQuality:(float)quality
+                 atDirectory:(NSURL*)directory;
+- (ShotImage*) initWithShotMetadata:(ShotMetadata*)shotMetadata;
 
 @end

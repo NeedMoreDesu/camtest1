@@ -35,10 +35,12 @@
 		D781919E185202C700C94724 /* TumblrUploadr.m in Sources */ = {isa = PBXBuildFile; fileRef = D7819198185202C700C94724 /* TumblrUploadr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D78191A31852683700C94724 /* Sync.m in Sources */ = {isa = PBXBuildFile; fileRef = D78191A21852683700C94724 /* Sync.m */; };
 		D7829F4E1847845800BE714B /* NSArray+Func.m in Sources */ = {isa = PBXBuildFile; fileRef = D7829F4D1847845800BE714B /* NSArray+Func.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D783E12A185B692100590268 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D783E128185B692100590268 /* Model.xcdatamodeld */; };
+		D783E17A185B7E8800590268 /* ShotMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = D783E179185B7E8800590268 /* ShotMetadata.m */; };
 		D78491C21854B4A900F8DD01 /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = D78491C11854B4A900F8DD01 /* State.m */; };
 		D784EAD718488B6C00AB9A29 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */; };
 		D784EAD918488BAF00AB9A29 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAD818488BAF00AB9A29 /* CoreData.framework */; };
-		D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = D784EADE184895AA00AB9A29 /* UIImageMeta.m */; };
+		D784EADF184895AA00AB9A29 /* ShotImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D784EADE184895AA00AB9A29 /* ShotImage.m */; };
 		D784EAE11848BDB300AB9A29 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D784EAE01848BDB300AB9A29 /* ImageIO.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,12 +101,15 @@
 		D78191A21852683700C94724 /* Sync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sync.m; sourceTree = "<group>"; };
 		D7829F4C1847845800BE714B /* NSArray+Func.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Func.h"; sourceTree = "<group>"; };
 		D7829F4D1847845800BE714B /* NSArray+Func.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Func.m"; sourceTree = "<group>"; };
+		D783E129185B692100590268 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		D783E178185B7E8800590268 /* ShotMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShotMetadata.h; sourceTree = "<group>"; };
+		D783E179185B7E8800590268 /* ShotMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShotMetadata.m; sourceTree = "<group>"; };
 		D78491C01854B4A900F8DD01 /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		D78491C11854B4A900F8DD01 /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
 		D784EAD618488B6C00AB9A29 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		D784EAD818488BAF00AB9A29 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		D784EADD184895AA00AB9A29 /* UIImageMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageMeta.h; sourceTree = "<group>"; };
-		D784EADE184895AA00AB9A29 /* UIImageMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageMeta.m; sourceTree = "<group>"; };
+		D784EADD184895AA00AB9A29 /* ShotImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShotImage.h; sourceTree = "<group>"; };
+		D784EADE184895AA00AB9A29 /* ShotImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShotImage.m; sourceTree = "<group>"; };
 		D784EAE01848BDB300AB9A29 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		FE3CED5045824E2881E287D1 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -244,14 +249,17 @@
 		D784EADA184894B500AB9A29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D784EADD184895AA00AB9A29 /* UIImageMeta.h */,
-				D784EADE184895AA00AB9A29 /* UIImageMeta.m */,
+				D784EADD184895AA00AB9A29 /* ShotImage.h */,
+				D784EADE184895AA00AB9A29 /* ShotImage.m */,
+				D783E178185B7E8800590268 /* ShotMetadata.h */,
+				D783E179185B7E8800590268 /* ShotMetadata.m */,
 				D7819188184FD55800C94724 /* Filter.h */,
 				D7819189184FD55800C94724 /* Filter.m */,
 				D78191A11852683700C94724 /* Sync.h */,
 				D78191A21852683700C94724 /* Sync.m */,
 				D78491C01854B4A900F8DD01 /* State.h */,
 				D78491C11854B4A900F8DD01 /* State.m */,
+				D783E128185B692100590268 /* Model.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -429,11 +437,13 @@
 				D77C16B81844F70200F0E4AC /* main.m in Sources */,
 				D781919E185202C700C94724 /* TumblrUploadr.m in Sources */,
 				D7819184184FC18A00C94724 /* ViewControllerSave.m in Sources */,
+				D783E17A185B7E8800590268 /* ShotMetadata.m in Sources */,
 				D781918D184FE78800C94724 /* ViewControllerFilterTable.m in Sources */,
 				D781917B184FA61D00C94724 /* ViewControllerRoot.m in Sources */,
-				D784EADF184895AA00AB9A29 /* UIImageMeta.m in Sources */,
+				D784EADF184895AA00AB9A29 /* ShotImage.m in Sources */,
 				D781919B185202C700C94724 /* NSData+URLEncode.m in Sources */,
 				D78191A31852683700C94724 /* Sync.m in Sources */,
+				D783E12A185B692100590268 /* Model.xcdatamodeld in Sources */,
 				D781918A184FD55800C94724 /* Filter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,6 +667,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D783E128185B692100590268 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D783E129185B692100590268 /* Model.xcdatamodel */,
+			);
+			currentVersion = D783E129185B692100590268 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D77C16A01844F70200F0E4AC /* Project object */;
 }

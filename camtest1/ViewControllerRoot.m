@@ -17,7 +17,7 @@
 {
     __weak IBOutlet UITableViewCell *_viewCreatedCell;
 }
-@property NSMutableArray *photos;
+@property NSArray *photos;
 
 @end
 
@@ -30,11 +30,14 @@
         ViewControllerSettings *viewControllerSettings = [segue destinationViewController];
         viewControllerSettings.delegate = self;
     }
-    if([[segue identifier] isEqualToString:@"TakingPhoto"])
-    {
-        TabBarController *tabBarController = [segue destinationViewController];
-        [tabBarController setMetaImage:_metaImage];
-    }
+//    if([[segue identifier] isEqualToString:@"TakingPhoto"])
+//    {
+//        TabBarController *tabBarController = [segue destinationViewController];
+//        [tabBarController setMetaImage:_metaImage];
+//        [tabBarController setState:_state];
+//    }
+    if([[segue destinationViewController] respondsToSelector:@selector(setState:)])
+        [[segue destinationViewController] setState:self.state];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -49,35 +52,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _metaImage = [[UIImageMeta alloc] init];
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation];
-    
-    NSURL *ubiq = [[NSFileManager defaultManager]
-                   URLForUbiquityContainerIdentifier:nil];
-    State *state = [[State alloc] init];
-    _state = state;
-    Sync *sync = [[Sync alloc] init];
-    _state.sync = sync;
-    _metaImage.state = self.state;
-    sync.directory1 = [ubiq URLByAppendingPathComponent:@"Documents"];
-    sync.directory2 = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
-
-    [[NSNotificationCenter defaultCenter]
-     addObserver:sync
-     selector:@selector(simpleSync)
-     name: UIApplicationDidBecomeActiveNotification
-     object:nil];
+//    _metaImage = [[ShotImage alloc] init];
     
 	// Do any additional setup after loading the view.
 }
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation
+- (void)viewDidAppear:(BOOL)animated
 {
-    [self.state setCurrentLocation: newLocation];
+    [self.state.meta updateOpenDate];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,39 +80,26 @@
 
 
 - (void)viewCreatedShots {
-    // Create array of `MWPhoto` objects
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSArray *imageURLS = [[NSFileManager defaultManager]
-                          contentsOfDirectoryAtURL:[NSURL fileURLWithPath:documentsDirectory]
-                          includingPropertiesForKeys:nil
-                          options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
-                          error:nil];
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     [imageCache clearMemory];
     [imageCache clearDisk];
     [imageCache cleanDisk];
-    self.photos = (NSMutableArray*)
-    [[imageURLS filter:^BOOL(NSUInteger idx, NSURL *item) {
-        return [[item pathExtension] isEqual: @"jpeg"];
-    }] map:^id(NSURL *item) {
-        UIImageMeta *metaImage = [[UIImageMeta alloc] initWithURL: item];
-        metaImage.state = self.state;
-        NSDictionary *gps = [[metaImage metadata]
-                             objectForKey:@"{GPS}"];
-        NSString *filename = [[item lastPathComponent] description];
-        NSString *date=@"", *location=@"";
-        if(gps)
+
+    NSArray *metadatas = [ShotMetadata fetchShotMetadataWithContext:self.state.managedObjectContext];
+
+    self.photos =
+    [metadatas map:^id(ShotMetadata *item) {
+        if(!item.image)
         {
-            date= [NSString stringWithFormat:@"%@ %@",
-                   gps[@"DateStamp"], gps[@"TimeStamp"]];
-            location = [NSString stringWithFormat:@"Lat: %@%@ Lon: %@%@ Alt:%@",
-                        gps[@"LatitudeRef"],gps[@"Latitude"],
-                        gps[@"LongitudeRef"],gps[@"Longitude"],
-                        gps[@"Altitude"]];
+            ShotImage *image = [[ShotImage alloc] initWithShotMetadata:item];
+            item.image = image;
         }
-        metaImage.mwPhoto.caption = [NSString stringWithFormat:@"%@ %@ %@", filename, location, date];
-        return metaImage;
+        item.image.mwPhoto.caption = item.description;
+        return item;
+    }];
+
+    self.photos = [self.photos filter:^BOOL(NSUInteger idx, ShotMetadata *item) {
+        return item.image.image != nil;
     }];
     
     // Create & present browser
@@ -153,17 +122,17 @@
 - (MWPhoto *)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
     if (index < self.photos.count)
     {
-        UIImageMeta *metaImage = [self.photos objectAtIndex:index];
-        return [metaImage mwPhoto];
+        ShotMetadata *meta = [self.photos objectAtIndex:index];
+        return [meta.image mwPhoto];
     }
     return nil;
 }
 
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser didDisplayPhotoAtIndex:(NSUInteger)index
 {
-    UIImageMeta *metaImage = [self.photos objectAtIndex:index];
-    _metaImage = metaImage;
-    [[metaImage state] setLocation:nil];
+    ShotMetadata *meta = [self.photos objectAtIndex:index];
+    self.state.meta = meta;
+//    [[metaImage state] setLocation:nil];
 }
 
 

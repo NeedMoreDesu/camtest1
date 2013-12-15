@@ -6,30 +6,19 @@
 //  Copyright (c) 2013 dev. All rights reserved.
 //
 
-#import "UIImageMeta.h"
+#import "ShotImage.h"
 #import <ImageIO/ImageIO.h>
 // #import "EXF.h"
 // #import "EXFUtils.h"
 
-@implementation UIImageMeta
+@implementation ShotImage
 
-- (UIImageMeta*)init
-{
-    if([super init])
-    {
-        [self setQuality:90];
-    }
-    return self;
-}
+@synthesize image = _image;
 
-- (void)saveImageWithName:(NSString*)name quality:(float)quality
+- (void)saveImageWithQuality:(float)quality
+              atDirectory:(NSURL*)directory
 {
-    [self saveImageWithName:name quality:quality atDirectory:self.state.sync.directory1];
-    [self saveImageWithName:name quality:quality atDirectory:self.state.sync.directory2];
-}
-
-- (void)saveImageWithName:(NSString*)name quality:(float)quality atDirectory:(NSURL*)directory
-{
+    [self.metadata acceptChanges];
     if([self image] && directory)
     {
         NSString *docDir = [directory path];
@@ -38,6 +27,8 @@
         NSLog(@"%@",docDir);
         
         NSLog(@"saving jpeg");
+        NSString *name = self.metadata.filename;
+        CLLocation *location = self.metadata.location;
         NSString *jpegFilePath = [NSString stringWithFormat:@"%@/%@.jpeg",docDir,name];
         NSData *data = [NSData dataWithData:UIImageJPEGRepresentation([self image], quality)];
         
@@ -52,21 +43,21 @@
         if(!destination) {
             NSLog(@"***Could not create image destination ***");
         }
-        if(![self metadata])
-            [self setMetadata:
-             [NSMutableDictionary dictionaryWithDictionary:
-              (__bridge NSDictionary *)
-              CGImageSourceCopyPropertiesAtIndex(source,0,NULL)]];
-        if(self.state.location)
+        NSDictionary *meta = self.metadata.metadata;
+        if(!meta)
+            meta =
+            [NSMutableDictionary dictionaryWithDictionary:
+             (__bridge NSDictionary *)
+             CGImageSourceCopyPropertiesAtIndex(source,0,NULL)];
+        if(location)
         {
-            NSDictionary *gps = [self getGPSDictionaryForLocation:self.state.location];
+            NSDictionary *gps = [self getGPSDictionaryForLocation:location];
             NSString *key = (NSString*)kCGImagePropertyGPSDictionary;
-            [[self metadata]
+            [meta
              setValue: gps
              forKey: key];
         }
-        NSLog(@"%@", self.metadata);
-        CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) [self metadata]);
+        CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) meta);
         BOOL success = NO;
         success = CGImageDestinationFinalize(destination);
         if(!success) {
@@ -82,45 +73,62 @@
     }
 }
 
-- (UIImageMeta*) initWithURL:(NSURL*)url
+- (ShotImage*) initWithShotMetadata:(ShotMetadata*)shotMetadata
 {
-    if ([super init] && url)
+    NSURL *homeURL = [NSURL fileURLWithPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]];
+    NSURL *url;
+    if (shotMetadata.filename)
+     url = [[homeURL
+             URLByAppendingPathComponent:shotMetadata.filename]
+            URLByAppendingPathExtension:@"jpeg"];
+    if ([super init])
     {
         NSData *data = [[NSData alloc] initWithContentsOfURL:url];
-        NSDictionary *dic = nil;
-        CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)(data), NULL);
+//        NSDictionary *dic = nil;
+//        CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)(data), NULL);
         
-        if ( NULL == source )
-        {
-#ifdef _DEBUG
-            CGImageSourceStatus status = CGImageSourceGetStatus ( source );
-            NSLog ( @"Error: file name : %@ - Status: %d", file, status );
-#endif
-        }
-        else
-        {
-            CFDictionaryRef metadataRef =
-            CGImageSourceCopyPropertiesAtIndex ( source, 0, NULL );
-            if ( metadataRef )
-            {
-                NSDictionary* immutableMetadata = (__bridge NSDictionary *)metadataRef;
-                if ( immutableMetadata )
-                {
-                    dic =
-                    [ NSDictionary dictionaryWithDictionary : (__bridge NSDictionary *)metadataRef ];
-                }
-                
-                CFRelease ( metadataRef );
-            }
-            
-            CFRelease(source);
-            source = nil;
-        }
+//        if ( NULL == source )
+//        {
+//#ifdef _DEBUG
+//            CGImageSourceStatus status = CGImageSourceGetStatus ( source );
+//            NSLog ( @"Error: file name : %@ - Status: %d", file, status );
+//#endif
+//        }
+//        else
+//        {
+//            CFDictionaryRef metadataRef =
+//            CGImageSourceCopyPropertiesAtIndex ( source, 0, NULL );
+//            if ( metadataRef )
+//            {
+//                NSDictionary* immutableMetadata = (__bridge NSDictionary *)metadataRef;
+//                if ( immutableMetadata )
+//                {
+//                    dic =
+//                    [ NSDictionary dictionaryWithDictionary : (__bridge NSDictionary *)metadataRef ];
+//                }
+//                
+//                CFRelease ( metadataRef );
+//            }
+//            
+//            CFRelease(source);
+//            source = nil;
+//        }
         self.image = [[UIImage alloc] initWithData:data];
-        self.metadata = [NSMutableDictionary dictionaryWithDictionary:dic];
-        self.mwPhoto = [[MWPhoto alloc] initWithURL:url];
+//        self.metadata.metadata = [NSMutableDictionary dictionaryWithDictionary:dic];
+        self.mwPhoto = [[MWPhoto alloc] initWithImage:self.image];
+        self.metadata = shotMetadata;
     }
     return self;
+}
+
+- (UIImage *)image
+{
+    return _image;
+}
+- (void) setImage:(UIImage *)image
+{
+    _image = image;
+    _mwPhoto = [[MWPhoto alloc] initWithImage:self.image];
 }
 
 - (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {

@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageMeta.h"
+#import "ShotImage.h"
+#import "State.h"
 
 @interface ViewControllerFilterTable : UITableViewController
 
-@property UIImageMeta *metaImage;
+@property State *state;
 
 @end

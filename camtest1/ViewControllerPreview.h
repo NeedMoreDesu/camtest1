@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "MWPhotoBrowser.h"
-#import "UIImageMeta.h"
-
+#import "ShotImage.h"
+#import "State.h"
 
 @interface ViewControllerPreview : UIViewController
 <UIImagePickerControllerDelegate,
 UINavigationControllerDelegate>
 
-@property UIImageMeta *metaImage;
+//@property ShotImage *metaImage;
+@property State *state;
 
 @end

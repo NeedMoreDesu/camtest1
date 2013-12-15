@@ -19,12 +19,23 @@
     __weak IBOutlet UISlider *_scroll;
     __weak IBOutlet UITextView *_textView;
 }
+@property (weak, nonatomic) IBOutlet UIButton *saveAsNewButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveAsRewriteButton;
 
 @property (nonatomic, strong) ACAccountStore *accountStore;
 
 @end
 
 @implementation ViewControllerSave
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField              // called when 'return' key pressed.
+{
+    [self.saveAsNewButton
+     setTitle:[NSString stringWithFormat:@"Save as %@ (new)", _text.text]
+     forState:UIControlStateNormal];
+    [textField resignFirstResponder];
+    return YES;
+}
 
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
@@ -41,6 +52,11 @@
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     [self.tabBarController.navigationItem setRightBarButtonItem:nil];
+    self.state.meta.desc = _textView.text;
+    NSError *error = nil;
+    [self.state.managedObjectContext save:&error];
+    if (error)
+        NSLog(@"Error during metadata saving: %@", error);
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -55,10 +71,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _text.text = [self generateFilename];
+ 
     _accountStore = [[ACAccountStore alloc] init];
-    
+
 	// Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self updateFilename];
+    if(self.state.meta.desc)
+        [_textView setText:self.state.meta.desc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,19 +110,77 @@
     return filename;
 }
 
+- (void) updateFilename
+{
+    _text.text = [self generateFilename];
+    [self.saveAsNewButton
+     setTitle:[NSString stringWithFormat:@"Save as %@ (new)", _text.text]
+     forState:UIControlStateNormal];
+    if(self.state.meta.filename)
+    {
+        [self.saveAsRewriteButton
+         setTitle:[NSString stringWithFormat:@"Save as %@ (rewrite)", self.state.meta.filename]
+         forState:UIControlStateNormal];
+        self.saveAsRewriteButton.enabled = YES;
+    }
+    else
+        self.saveAsRewriteButton.enabled = NO;
+}
+
+- (IBAction)rewritePhoto:(UIButton *)sender {
+    self.state.meta.desc = _textView.text;
+
+    [self.state.meta.image
+     saveImageWithQuality:_scroll.value
+     atDirectory:self.state.sync.homeDirectory];
+    [self.state.sync simpleSync];
+    
+    NSError *error = nil;
+    [self.state.managedObjectContext save:&error];
+    if(error)
+        NSLog(@"Error during metadata saving: %@", error);
+    
+    _topLabel.text = [NSString stringWithFormat:@"Saved as %@", self.state.meta.filename];
+    
+    [self updateFilename];
+}
+
 - (IBAction)savePhoto:(UIButton *)sender {
-    [_metaImage
-     saveImageWithName:[_text text]
-     quality:[_scroll value]];
-    [_text setText: [self generateFilename]];
+    self.state.meta.desc = _textView.text;
+    
+    ShotMetadata *old = self.state.meta;
+    ShotImage *image = old.image;
+    old.image = nil;
+    self.state.meta = [old
+     shotMetadataWithContext:self.state.managedObjectContext
+     filename:_text.text];
+    self.state.meta.image = image;
+    [old dumpChanges];
+    image.metadata = self.state.meta;
+
+    
+    [self.state.meta.image
+     saveImageWithQuality:_scroll.value
+     atDirectory:self.state.sync.homeDirectory];
+    [self.state.sync simpleSync];
+    
+    NSError *error = nil;
+    [self.state.managedObjectContext save:&error];
+    if(error)
+        NSLog(@"Error during metadata saving: %@", error);
+    
+    _topLabel.text = [NSString stringWithFormat:@"Saved as %@", self.state.meta.filename];
+    
+    [self updateFilename];
 }
 
 #pragma mark - twitter
 
 - (IBAction)tweetPhoto:(id)sender {
     [self
-     postImageToTwitter:[_metaImage image]
+     postImageToTwitter:[self.state.meta.image image]
      withStatus:[_textView text]];
+    _topLabel.text = @"Tweeted";
 }
 
 - (void)postImageToTwitter:(UIImage *)image withStatus:(NSString *)status
@@ -161,17 +242,18 @@
 #pragma mark - tumblr
 
 - (IBAction)tumblrPhoto:(id)sender {
-    NSData *picData = [NSData dataWithData:UIImagePNGRepresentation([_metaImage image])];
+    NSData *picData = [NSData dataWithData:UIImagePNGRepresentation([self.state.meta.image image])];
     void (^block) (void) = ^{
         TumblrUploadr *tu = [[TumblrUploadr alloc]
                              initWithNSDataForPhotos:@[picData]
-                             andBlogName:@"testtesttestwww.tumblr.com"
+                             andBlogName:self.state.tumblrBlogName
                              andDelegate:nil
                              andCaption:[_textView text]];
         dispatch_async( dispatch_get_main_queue(), ^{
             [tu
              signAndSendWithTokenKey:[[TMAPIClient sharedInstance] OAuthToken]
              andSecret:[[TMAPIClient sharedInstance] OAuthTokenSecret]];
+            _topLabel.text = @"Tumblrd";
         });
     };
     if ([[TMAPIClient sharedInstance] OAuthToken])

@@ -10,8 +10,8 @@
 
 @interface Sync : NSObject
 
-@property NSURL *directory1;
-@property NSURL *directory2;
+@property NSURL *targetDirectory;
+@property NSURL *homeDirectory;
 
 - (void)simpleSync;
 

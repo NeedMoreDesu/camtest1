@@ -10,9 +10,4 @@
 
 @implementation State
 
-- (void)updateLocation
-{
-    [self setLocation:[self currentLocation]];
-}
-
 @end

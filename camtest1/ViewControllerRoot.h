@@ -7,21 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageMeta.h"
+#import "ShotImage.h"
 #import "MWPhotoBrowser.h"
 #import "ViewControllerSettings.h"
-#import <CoreLocation/CoreLocation.h>
+#import "State.h"
 
 @interface ViewControllerRoot : UITableViewController
 <MWPhotoBrowserDelegate,
 UITableViewDelegate,
-SettingsDelegate,
-CLLocationManagerDelegate>
+SettingsDelegate>
 
 @property NSString *name;
 @property NSString *email;
-@property UIImageMeta *metaImage;
+//@property ShotImage *metaImage;
 @property State *state;
-@property CLLocationManager *locationManager;
 
 @end

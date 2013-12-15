@@ -12,8 +12,8 @@
 @implementation Sync
 
 - (void)simpleSync {
-    if (!self.directory1 ||
-        !self.directory2)
+    if (!self.targetDirectory ||
+        !self.homeDirectory)
     {
         NSLog(@"Sync failed");
         return;
@@ -24,7 +24,7 @@
     NSMutableArray *arr1 =
     (NSMutableArray*)
     [[manager
-      contentsOfDirectoryAtURL:self.directory1
+      contentsOfDirectoryAtURL:self.targetDirectory
       includingPropertiesForKeys:nil
       options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
       error:nil]
@@ -34,35 +34,53 @@
     NSMutableArray *arr2 =
     (NSMutableArray*)
     [[manager
-      contentsOfDirectoryAtURL:self.directory2
+      contentsOfDirectoryAtURL:self.homeDirectory
       includingPropertiesForKeys:nil
       options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
       error:nil]
      map:^id(id item) {
          return [item lastPathComponent];
      }];
-    {
-        NSArray *arr1copy = [arr1 copy];
-        [arr1 removeObjectsInArray:arr2];
-        [arr2 removeObjectsInArray:arr1copy];
-    }
+
     [arr1 enumerateObjectsUsingBlock:^(NSString* obj, NSUInteger idx, BOOL *stop) {
+        NSURL *from = [self.targetDirectory URLByAppendingPathComponent:obj];
+        NSURL *to = [self.homeDirectory URLByAppendingPathComponent:obj];
         NSError *error = nil;
-        [manager
-         copyItemAtURL:[self.directory1 URLByAppendingPathComponent:obj]
-         toURL:[self.directory2 URLByAppendingPathComponent:obj]
-         error:&error];
-        if (error)
-            NSLog(@"An error occured syncing %@ in %@", obj, self.directory1);
+        BOOL exists = [manager fileExistsAtPath:to.path];
+        NSDate *fromDate = [[manager attributesOfItemAtPath:from.path error:nil]
+                            objectForKey:NSFileCreationDate];
+        NSDate *toDate = [[manager attributesOfItemAtPath:to.path error:nil]
+                          objectForKey:NSFileCreationDate];
+        BOOL newer = [fromDate compare:toDate] == NSOrderedDescending;
+        if(!exists || newer)
+        {
+            [manager
+             copyItemAtURL:from
+             toURL:to
+             error:&error];
+            if (error)
+                NSLog(@"An error occured syncing %@ in %@", obj, self.targetDirectory);
+        }
     }];
     [arr2 enumerateObjectsUsingBlock:^(NSString* obj, NSUInteger idx, BOOL *stop) {
+        NSURL *from = [self.homeDirectory URLByAppendingPathComponent:obj];
+        NSURL *to = [self.targetDirectory URLByAppendingPathComponent:obj];
         NSError *error = nil;
-        [manager
-         copyItemAtURL:[self.directory2 URLByAppendingPathComponent:obj]
-         toURL:[self.directory1 URLByAppendingPathComponent:obj]
-         error:&error];
-        if (error)
-            NSLog(@"An error occured syncing %@ in %@", obj, self.directory2);
+        BOOL exists = [manager fileExistsAtPath:to.path];
+        NSDate *fromDate = [[manager attributesOfItemAtPath:from.path error:nil]
+                            objectForKey:NSFileCreationDate];
+        NSDate *toDate = [[manager attributesOfItemAtPath:to.path error:nil]
+                          objectForKey:NSFileCreationDate];
+        BOOL newer = [fromDate compare:toDate] == NSOrderedDescending;
+        if(!exists || newer)
+        {
+            [manager
+             copyItemAtURL:from
+             toURL:to
+             error:&error];
+            if (error)
+                NSLog(@"An error occured syncing %@ in %@", obj, self.targetDirectory);
+        }
     }];
 }
 

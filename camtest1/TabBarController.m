@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setDelegate:self];
+    self.delegate = self;
     [self
      tabBarController:self
      didSelectViewController:[[self viewControllers] objectAtIndex:0]];
@@ -45,17 +45,18 @@
 - (BOOL)tabBarController:(UITabBarController *)tabBarController
 shouldSelectViewController:(UIViewController *)viewController
 {
-    
     return
     ([[viewController title] isEqual: @"View"]) ||
-    [[self metaImage] image] != nil;
+    self.state.meta.image.image != nil;
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController
  didSelectViewController:(id)viewController
 {
-    if ([viewController respondsToSelector:@selector(setMetaImage:)])
-        [viewController setMetaImage: _metaImage];
+//    if ([viewController respondsToSelector:@selector(setMetaImage:)])
+//        [viewController setMetaImage: _metaImage];
+    if ([viewController respondsToSelector:@selector(setState:)])
+        [viewController setState: _state];
 }
 
 @end

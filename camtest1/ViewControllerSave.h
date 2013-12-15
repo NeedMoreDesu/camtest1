@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageMeta.h"
+#import "State.h"
+#import "ShotImage.h"
 
 @interface ViewControllerSave : UIViewController
-<UITextViewDelegate>
+<UITextViewDelegate,
+UITextFieldDelegate>
 
-@property UIImageMeta *metaImage;
+//@property ShotImage *metaImage;
+@property State *state;
 
 @end

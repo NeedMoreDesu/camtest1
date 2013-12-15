@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "Sync.h"
 #import <CoreLocation/CoreLocation.h>
+#import "ShotMetadata.h"
 
 @interface State : NSObject
 
 @property CLLocation *location;
-@property CLLocation *currentLocation;
 @property Sync *sync;
-
-- (void) updateLocation;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property ShotMetadata *meta;
+@property NSString *tumblrBlogName;
 
 @end

@@ -48,7 +48,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 //    [self.navigationController setNavigationBarHidden:YES animated:animated];
-    [_imageView setImage:[_metaImage image]];
+    [_imageView setImage:[self.state.meta.image image]];
     [super viewWillAppear:animated];
 }
 
@@ -61,7 +61,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [_imageView setImage:[_metaImage image]];
+    [_imageView setImage:[self.state.meta.image image]];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -130,16 +130,19 @@
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:assetURL
              resultBlock:^(ALAsset *asset) {
-                 [_metaImage setMetadata: [[asset defaultRepresentation] metadata]];
-                 [[_metaImage state] updateLocation];
+                 self.state.meta.unsaved_metadata =
+                  [NSMutableDictionary
+                   dictionaryWithDictionary:[[asset defaultRepresentation] metadata]];
 //                 CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
 //                 NSLog(@"%@", location);
              }
             failureBlock:^(NSError *error) {
             }];
 
-    [_metaImage setImage: image];
-    [_imageView setImage: [_metaImage image]];
+    [self.state.meta.image setImage: image];
+    self.state.meta.unsaved_location = self.state.location;
+    [self.state.meta updateUnsavedChangeDate];
+    [_imageView setImage: [self.state.meta.image image]];
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }

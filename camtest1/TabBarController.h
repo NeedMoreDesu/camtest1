@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageMeta.h"
+#import "ShotImage.h"
+#import "State.h"
 
 @interface TabBarController : UITabBarController
 <UITabBarControllerDelegate>
 
-@property UIImageMeta *metaImage;
+//@property ShotImage *metaImage;
+@property State *state;
 
 @end

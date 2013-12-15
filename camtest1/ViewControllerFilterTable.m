@@ -78,9 +78,10 @@
 {
     [tableView reloadData];
     UIImage *newImage = [[filters objectAtIndex:[indexPath row]]
-                         applyFilterToImage:[_metaImage image]];
-    [_metaImage setImage:newImage];
-
+                         applyFilterToImage:[self.state.meta.image image]];
+    self.state.meta.image.image = newImage;
+    [self.state.meta updateUnsavedChangeDate];
+    
     [[self tabBarController] setSelectedIndex:0];
 }
 
