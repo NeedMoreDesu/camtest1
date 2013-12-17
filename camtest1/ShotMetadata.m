@@ -22,6 +22,7 @@
 @synthesize unsaved_change_date = _unsaved_change_date;
 @synthesize unsaved_location = _unsaved_location;
 @synthesize unsaved_metadata = _unsaved_metadata;
+@synthesize unsaved_desc = _unsaved_desc;
 
 + (ShotMetadata*) shotMetadataWithContext:(NSManagedObjectContext*)context
 {
@@ -81,13 +82,15 @@
 {
     ShotMetadata * result = [ShotMetadata shotMetadataWithContext:context filename:filename];
     result.metadata_data = self.metadata_data;
-    result.desc = self.desc;
     result.location_data = self.location_data;
     result.change_date = self.change_date;
+    result.desc = self.desc;
+    
     result.unsaved_change_date = self.unsaved_change_date;
     result.unsaved_metadata = self.unsaved_metadata;
     result.unsaved_location = self.unsaved_location;
-
+    result.unsaved_desc = self.unsaved_desc;
+    
     return result;
 }
 
@@ -140,6 +143,7 @@
     self.change_date = self.unsaved_change_date?self.unsaved_change_date:self.change_date;
     self.metadata = self.unsaved_metadata?self.unsaved_metadata:self.metadata;
     self.location = self.unsaved_location?self.unsaved_location:self.location;
+    self.desc = self.unsaved_desc?self.unsaved_desc:self.desc;
     [self dumpChanges];
 }
 
@@ -148,6 +152,7 @@
     self.unsaved_change_date = nil;
     self.unsaved_location = nil;
     self.unsaved_metadata = nil;
+    self.unsaved_desc = nil;
 }
 
 - (void) updateUnsavedChangeDate

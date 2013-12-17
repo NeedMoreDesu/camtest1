@@ -52,7 +52,7 @@
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     [self.tabBarController.navigationItem setRightBarButtonItem:nil];
-    self.state.meta.desc = _textView.text;
+    self.state.meta.unsaved_desc = _textView.text;
     NSError *error = nil;
     [self.state.managedObjectContext save:&error];
     if (error)
@@ -80,7 +80,9 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self updateFilename];
-    if(self.state.meta.desc)
+    if(self.state.meta.unsaved_desc)
+        [_textView setText:self.state.meta.unsaved_desc];
+    else if(self.state.meta.desc)
         [_textView setText:self.state.meta.desc];
 }
 
@@ -128,8 +130,6 @@
 }
 
 - (IBAction)rewritePhoto:(UIButton *)sender {
-    self.state.meta.desc = _textView.text;
-
     [self.state.meta.image
      saveImageWithQuality:_scroll.value
      atDirectory:self.state.sync.homeDirectory];
@@ -146,8 +146,6 @@
 }
 
 - (IBAction)savePhoto:(UIButton *)sender {
-    self.state.meta.desc = _textView.text;
-    
     ShotMetadata *old = self.state.meta;
     ShotImage *image = old.image;
     old.image = nil;

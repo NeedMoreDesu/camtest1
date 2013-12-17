@@ -23,9 +23,11 @@
 @property (nonatomic, retain) NSDate * change_date;
 
 @property (nonatomic, strong) ShotImage *image;
+
 @property (nonatomic, strong) NSDate *unsaved_change_date;
 @property (nonatomic, strong) NSDictionary *unsaved_metadata;
 @property (nonatomic, strong) CLLocation *unsaved_location;
+@property (nonatomic, strong) NSString *unsaved_desc;
 
 + (ShotMetadata*) shotMetadataWithContext:(NSManagedObjectContext*)context;
 + (ShotMetadata*) shotMetadataWithContext:(NSManagedObjectContext *)context filename:(NSString*)filename;
